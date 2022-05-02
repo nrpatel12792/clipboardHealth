@@ -3,8 +3,11 @@ package com.automation.steps;
 import amazon.config.EnvFactory;
 import amazon.factories.DriverFactory;
 import com.typesafe.config.Config;
+import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.WebDriver;
+
+import java.util.ArrayList;
 
 
 public class Hooks {
@@ -20,4 +23,12 @@ public class Hooks {
         driver.get(HOME_PAGE_URL);
     }
 
+    @After("@end_scenario")
+    public void closeDriver() {
+        ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
+        for (String handle : tabs) {
+            driver.switchTo().window(handle);
+            driver.close();
+        }
+    }
 }

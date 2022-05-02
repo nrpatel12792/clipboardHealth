@@ -1,6 +1,6 @@
 Feature: Test Sandbox
 
-  @start_scenario @smoke
+  @start_scenario @smoke @end_scenario
   Scenario: verify menu options are displayed
     When user clicks hamburger button on nav page
     And user clicks "TV, Appliances, Electronics" on hamburger menu page
