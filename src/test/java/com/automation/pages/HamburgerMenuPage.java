@@ -1,20 +1,24 @@
 package com.automation.pages;
 
-import com.automation.pageElements.HomePageElements;
+import com.automation.pageElements.HamburgerMenuPageElements;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
+
+import java.util.List;
 
 public class HamburgerMenuPage extends BasePage{
 
-     m = new HomePageElements();
+     HamburgerMenuPageElements hamburgerMenuPageElements = new HamburgerMenuPageElements();
 
     public HamburgerMenuPage(WebDriver driver) {
         super(driver);
-        PageFactory.initElements(driver, homePageElements);
+        PageFactory.initElements(driver, hamburgerMenuPageElements);
     }
 
-    public void clickHamburgerIcon () throws Exception {
-        clickElement(homePageElements.hamburgerButton);
+    public void clickHamburgerOption(String option) throws Exception {
+        List<WebElement> hamburgerOptionList = hamburgerMenuPageElements.hamburgerMenuOptions;
+        clickElementFromList(hamburgerOptionList, option);
     }
 
 

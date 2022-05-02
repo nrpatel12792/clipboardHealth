@@ -1,16 +1,16 @@
 package com.automation.steps;
 
-import com.automation.pages.HomePage;
+import com.automation.pages.HamburgerMenuPage;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.WebDriver;
 
 public class HamburgerMenuSteps {
 
     WebDriver driver = Hooks.driver;
-    HomePage homePage = new HomePage(driver);
+    HamburgerMenuPage hamburgerMenuPage = new HamburgerMenuPage(driver);
 
-    @Then("^user clicks hamburger button on home page$")
-    public void clickHamburgerButtonHomePage () throws Exception {
-        homePage.clickHamburgerIcon();
+    @Then("^user clicks \"([^\"]*)\" on hamburger menu page$")
+    public void clickHamburgerOption (String option) throws Exception {
+        hamburgerMenuPage.clickHamburgerOption(option);
     }
 }
