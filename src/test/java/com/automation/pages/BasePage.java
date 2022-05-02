@@ -26,21 +26,27 @@ public class BasePage {
     }
 
     public void clickElementFromList (List<WebElement> elementsList, String option) throws Exception {
-        for (WebElement options : elementsList) {
-            if (options.getText().toLowerCase().equals(option.toLowerCase())) {
-                clickElement(options);
-                return;
+        try {
+            for (WebElement options : elementsList) {
+                if (options.getText().toLowerCase().equals(option.toLowerCase())) {
+                    clickElement(options);
+                    return;
+                }
             }
+        }catch (Exception e) {
+            throw new Exception("Cannot find " + option + " in list!");
         }
-        System.err.println("Cannot find " + option + " in list!");
     }
 
     public void clickElementFromListByIndex (List<WebElement> elementsList, int option) throws Exception {
-        if (elementsList.size() >= option) {
-            clickElement(elementsList.get(option-1));
-            return;
+        try {
+            if (elementsList.size() >= option) {
+                clickElement(elementsList.get(option-1));
+                return;
+            }
+        }catch (Exception e) {
+            throw new Exception("Option number:" + option + " exceeds in list!");
         }
-        System.err.println("Option number:" + option + " exceeds in list!");
     }
 
     public boolean isDisplayed (WebElement element, int time) throws Exception {
@@ -53,9 +59,13 @@ public class BasePage {
         }
     }
 
-    public void switchTab (int tabNumber) {
-        ArrayList<String> newTb = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(newTb.get(tabNumber-1));
+    public void switchTab (int tabNumber) throws Exception {
+        try {
+            ArrayList<String> newTb = new ArrayList<>(driver.getWindowHandles());
+            driver.switchTo().window(newTb.get(tabNumber-1));
+        }catch (Exception e) {
+            throw new Exception("Cannot switch to tab: " + tabNumber);
+        }
     }
 
     public String getText (WebElement element) throws Exception {
