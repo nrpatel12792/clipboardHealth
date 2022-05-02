@@ -17,7 +17,7 @@ public class MainAreaSteps {
     }
 
     @Then("^validate correct item About description for product \"([^\"]*)\" on main area page$")
-    public  void validateCorrectItemAboutDescription(String productName) throws Exception {
+    public void validateCorrectItemAboutDescription(String productName) throws Exception {
             Assert.assertTrue("Item description does not match expected one!",  mainAreaPage.validateCorrectItemAboutDescription(productName));
     }
 }

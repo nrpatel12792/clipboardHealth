@@ -10,7 +10,7 @@ public class RefinementSteps {
     WebDriver driver = Hooks.driver;
     RefinementPage refinementPage = new RefinementPage(driver);
 
-    @Then("^user select option \"([^\"]*)\" on refinement page$")
+    @Then("^user selects option \"([^\"]*)\" on refinement page$")
     public void clickRefinementOption (String option) throws Exception {
         refinementPage.clickRefinementOption(option);
     }

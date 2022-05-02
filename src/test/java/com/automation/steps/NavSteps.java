@@ -15,7 +15,7 @@ public class NavSteps {
         navPage.clickHamburgerIcon();
     }
 
-    @And("^user select option \"([^\"]*)\" in filter dropdown on nav page$")
+    @And("^user selects option \"([^\"]*)\" in filter dropdown on nav page$")
     public void selectOptionFromDropDown(String option) throws Exception {
         navPage.selectOptionFromDropDown(option);
     }
