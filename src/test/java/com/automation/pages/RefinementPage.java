@@ -17,7 +17,7 @@ public class RefinementPage extends BasePage{
     }
 
     public void clickRefinementOption(String option) throws Exception {
-        isDisplayed(refinementPageElements.brandLabel, 5);
+        isDisplayed(refinementPageElements.brandLabel, 10);
         List<WebElement> refinementOptionList = refinementPageElements.refinementOptionList;
         clickElementFromList(refinementOptionList, option);
     }

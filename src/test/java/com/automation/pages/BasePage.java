@@ -1,4 +1,5 @@
 package com.automation.pages;
+import com.automation.steps.Hooks;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -17,7 +18,7 @@ public class BasePage {
 
     public void clickElement (WebElement element) throws Exception {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
             wait.until(ExpectedConditions.elementToBeClickable(element));
             element.click();
         }catch (Exception e) {
@@ -33,6 +34,7 @@ public class BasePage {
                     return;
                 }
             }
+            throw new Error("Cannot find " + option + " in list!");
         }catch (Exception e) {
             throw new Exception("Cannot find " + option + " in list!");
         }

@@ -13,4 +13,7 @@ public class MainAreaPageElements {
     @FindBy(id = "feature-bullets")
     public WebElement productAboutDescription;
 
+    @FindBy(css = ".a-size-medium-plus.a-color-base.a-text-normal")
+    public WebElement resultText;
+
 }

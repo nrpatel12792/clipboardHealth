@@ -1,5 +1,6 @@
 package com.automation.steps;
 
+import amazon.factories.DriverFactory;
 import com.automation.pages.MainAreaPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -8,7 +9,7 @@ import org.openqa.selenium.WebDriver;
 
 public class MainAreaSteps {
 
-    WebDriver driver = Hooks.driver;
+    WebDriver driver = DriverFactory.getWebDriver();
     MainAreaPage mainAreaPage = new MainAreaPage(driver);
 
     @And("^user clicks product number \"([^\"]*)\" on main area page$")

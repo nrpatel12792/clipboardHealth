@@ -21,6 +21,7 @@ public class MainAreaPage extends BasePage{
     }
 
     public void clickProductOnMainArea(int option) throws Exception {
+        isDisplayed(mainAreaPageElements.resultText,10);
         List<WebElement> productTitleList = mainAreaPageElements.productTitleList;
         clickElementFromListByIndex(productTitleList, option);
     }

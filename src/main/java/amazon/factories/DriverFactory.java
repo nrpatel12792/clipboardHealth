@@ -13,21 +13,26 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.opera.OperaDriver;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Slf4j
 public class DriverFactory {
+    public WebDriver driver;
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final Host HOST = Host.parse(config.getString("HOST"));
     private static final Browser BROWSER = Browser.parse(config.getString("BROWSER"));
+    private static ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
+    private static List<WebDriver> listDrivers = new ArrayList<WebDriver>();
 
     private DriverFactory() {
         throw new IllegalStateException("Static factory class");
     }
 
-    public static WebDriver getDriver() {
-        log.info("Getting driver for host: {}", HOST);
+    public static WebDriver createDriver() {
         switch (HOST) {
             case LOCALHOST:
-                return getLocalWebDriver();
+                return createLocalWebDriver();
             case DOCKER_CONTAINER:
                 // fall through - same options apply.
             case DOCKER_SELENIUM_GRID:
@@ -37,8 +42,19 @@ public class DriverFactory {
         }
     }
 
-    private static WebDriver getLocalWebDriver() {
-        log.info("Getting driver for browser: {}", BROWSER);
+    public static WebDriver getWebDriver() {
+        return webDriver.get();
+    }
+
+    public static void setDriver(WebDriver driver) {
+        webDriver.set(driver);
+    }
+
+    public static void addDriver(WebDriver driver) {
+        listDrivers.add(driver);
+    }
+
+    private static WebDriver createLocalWebDriver() {
         switch (BROWSER) {
             case CHROME:
                 WebDriverManager.chromedriver().setup();

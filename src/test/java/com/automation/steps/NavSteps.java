@@ -1,5 +1,6 @@
 package com.automation.steps;
 
+import amazon.factories.DriverFactory;
 import com.automation.pages.NavPage;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
@@ -7,7 +8,7 @@ import org.openqa.selenium.WebDriver;
 
 public class NavSteps {
 
-    WebDriver driver = Hooks.driver;
+    WebDriver driver = DriverFactory.getWebDriver();
     NavPage navPage = new NavPage(driver);
 
     @Then("^user clicks hamburger button on nav page$")

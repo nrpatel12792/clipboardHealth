@@ -1,6 +1,7 @@
 package com.automation.pages;
 
 import com.automation.pageElements.HamburgerMenuPageElements;
+import com.automation.steps.Hooks;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.PageFactory;
