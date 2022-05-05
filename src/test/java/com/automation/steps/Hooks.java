@@ -10,7 +10,10 @@ import org.apache.log4j.Logger;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.*;
+import org.openqa.selenium.support.ui.Wait;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.time.Duration;
 import java.util.ArrayList;
 
 
@@ -28,16 +31,15 @@ public class Hooks {
         DriverFactory.setDriver(driver);
         DriverFactory.addDriver(driver);
         driver.get(HOME_PAGE_URL);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+        wait.until(webDriver -> "complete".equals(((JavascriptExecutor) webDriver)
+                .executeScript("return document.readyState")));
     }
 
     @After("@end_scenario")
     public void tearDown() {
         if (driver != null) {
-            ArrayList<String> tabs = new ArrayList<>(driver.getWindowHandles());
-            for (String handle : tabs) {
-                driver.switchTo().window(handle);
-                driver.close();
-            }
+            driver.quit();
         }
     }
 

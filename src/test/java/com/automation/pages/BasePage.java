@@ -1,5 +1,4 @@
 package com.automation.pages;
-import com.automation.steps.Hooks;
 import org.openqa.selenium.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;

@@ -7,11 +7,14 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
+import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.CapabilityType;
+import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -68,9 +71,16 @@ public class CapabilitiesFactory {
     }
 
     public static FirefoxOptions getFirefoxOptions() {
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("network.proxy.no_proxies_on", "localhost");
+        profile.setPreference("javascript.enabled", true);
+        profile.setPreference("browser.link.open_newwindow", 3);
+        profile.setPreference("browser.link.open_newwindow.restriction", 0);
+
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setAcceptInsecureCerts(ACCEPT_INSECURE_CERTIFICATES);
         firefoxOptions.setHeadless(HEADLESS);
+        firefoxOptions.setProfile(profile);
         return firefoxOptions;
     }
 

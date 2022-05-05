@@ -10,4 +10,7 @@ public class HamburgerMenuPageElements {
     @FindBy(className = "hmenu-item")
     public List<WebElement> hamburgerMenuOptions;
 
+    @FindBy(css = ".hmenu.hmenu-visible")
+    public WebElement hamburgerMenuWindow;
+
 }

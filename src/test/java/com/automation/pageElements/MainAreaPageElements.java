@@ -7,13 +7,10 @@ import java.util.List;
 
 public class MainAreaPageElements {
 
-    @FindBy(tagName = "h2")
+    @FindBy(xpath = "(//a[@class='a-link-normal s-underline-text s-underline-link-text s-link-style a-text-normal'])")
     public List<WebElement> productTitleList;
 
     @FindBy(id = "feature-bullets")
     public WebElement productAboutDescription;
-
-    @FindBy(css = ".a-size-medium-plus.a-color-base.a-text-normal")
-    public WebElement resultText;
 
 }

@@ -21,7 +21,7 @@ public class DriverFactory {
     public WebDriver driver;
     private static Config config = EnvFactory.getInstance().getConfig();
     private static final Host HOST = Host.parse(config.getString("HOST"));
-    private static final Browser BROWSER = Browser.parse(config.getString("BROWSER"));
+    private static Browser BROWSER = Browser.parse(config.getString("BROWSER"));
     private static ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
     private static List<WebDriver> listDrivers = new ArrayList<WebDriver>();
 
@@ -55,6 +55,9 @@ public class DriverFactory {
     }
 
     private static WebDriver createLocalWebDriver() {
+        if (System.getProperty("browser") != null) {
+            BROWSER = Browser.parse(System.getProperty("browser"));
+        }
         switch (BROWSER) {
             case CHROME:
                 WebDriverManager.chromedriver().setup();
