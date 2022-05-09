@@ -1,7 +1,6 @@
 package com.automation.steps;
 
 import amazon.factories.DriverFactory;
-import com.automation.pages.HamburgerMenuPage;
 import com.automation.pages.RefinementPage;
 import io.cucumber.java.en.Then;
 import org.openqa.selenium.WebDriver;
