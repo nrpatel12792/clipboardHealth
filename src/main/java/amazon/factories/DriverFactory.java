@@ -16,12 +16,31 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.lang.Boolean.parseBoolean;
+
 @Slf4j
 public class DriverFactory {
     public WebDriver driver;
     private static Config config = EnvFactory.getInstance().getConfig();
-    private static final Host HOST = Host.parse(config.getString("HOST"));
-    private static Browser BROWSER = Browser.parse(config.getString("BROWSER"));
+
+    private static Browser browser(){
+        Browser BROWSER = Browser.parse(config.getString("BROWSER"));
+        if (System.getProperty("browser") != null) {
+            BROWSER = Browser.parse(System.getProperty("browser"));
+        }
+        return BROWSER;
+    }
+
+
+    private static Host host(){
+        Host HOST = Host.parse(config.getString("HOST"));
+        if (System.getProperty("host") != null) {
+            HOST = Host.parse(System.getProperty("host"));
+        }
+        return HOST;
+    }
+
+
     private static ThreadLocal<WebDriver> webDriver = new ThreadLocal<>();
     private static List<WebDriver> listDrivers = new ArrayList<WebDriver>();
 
@@ -30,15 +49,16 @@ public class DriverFactory {
     }
 
     public static WebDriver createDriver() {
-        switch (HOST) {
+        switch (host()) {
             case LOCALHOST:
                 return createLocalWebDriver();
             case DOCKER_CONTAINER:
                 // fall through - same options apply.
             case DOCKER_SELENIUM_GRID:
+            case GRID:
                 return getRemoteWebDriver();
             default:
-                throw new IllegalStateException(String.format("%s is not a valid HOST choice. Pick your HOST from %s.", HOST, java.util.Arrays.asList(Host.values())));
+                throw new IllegalStateException(String.format("%s is not a valid HOST choice. Pick your HOST from %s.", host(), java.util.Arrays.asList(Host.values())));
         }
     }
 
@@ -55,10 +75,7 @@ public class DriverFactory {
     }
 
     private static WebDriver createLocalWebDriver() {
-        if (System.getProperty("browser") != null) {
-            BROWSER = Browser.parse(System.getProperty("browser"));
-        }
-        switch (BROWSER) {
+        switch (browser()) {
             case CHROME:
                 WebDriverManager.chromedriver().setup();
                 return new ChromeDriver(CapabilitiesFactory.getChromeOptions());
@@ -72,21 +89,21 @@ public class DriverFactory {
                 WebDriverManager.operadriver().setup();
                 return new OperaDriver();
             default:
-                throw new IllegalStateException(String.format("%s is not a valid browser choice. Pick your browser from %s.", BROWSER, java.util.Arrays.asList(BROWSER.values())));
+                throw new IllegalStateException(String.format("%s is not a valid browser choice. Pick your browser from %s.", browser(), java.util.Arrays.asList(browser().values())));
         }
     }
 
     /** Chrome, firefox and edge; are the only 3 options available under docker.selenium.grid */
     private static WebDriver getRemoteWebDriver() {
-        switch (BROWSER) {
+        switch (browser()) {
             case CHROME:
                 // fall - through. Same method for all browsers.
             case FIREFOX:
                 // fall - through. Same method for all browsers.
             case EDGE:
-                return new RemoteWebDriver(URLFactory.getHostURL(HOST), CapabilitiesFactory.getCapabilities(BROWSER));
+                return new RemoteWebDriver(URLFactory.getHostURL(host()), CapabilitiesFactory.getCapabilities(browser()));
             default:
-                throw new IllegalStateException(String.format("%s is not a valid browser choice. Pick your browser from %s.", BROWSER, java.util.Arrays.asList(BROWSER.values())));
+                throw new IllegalStateException(String.format("%s is not a valid browser choice. Pick your browser from %s.", browser(), java.util.Arrays.asList(browser().values())));
         }
     }
 }

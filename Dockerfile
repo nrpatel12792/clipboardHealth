@@ -82,4 +82,4 @@ ENV DISPLAY=:99
 RUN git clone https://github.com/Gerardtit/clipboardHealth.git
 
 RUN cd clipboardHealth \
-	&& mvn clean install
+	&& mvn clean install -Dbrowser=chrome -Dheadless=true

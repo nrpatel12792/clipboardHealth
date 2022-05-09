@@ -6,7 +6,8 @@ import java.util.Map;
 public enum Host {
     LOCALHOST("host.localhost"),
     DOCKER_CONTAINER("host.docker.container"),
-    DOCKER_SELENIUM_GRID("host.docker.selenium.grid");
+    DOCKER_SELENIUM_GRID("host.docker.selenium.grid"),
+    GRID("host.grid");
 
     public final String label;
 
