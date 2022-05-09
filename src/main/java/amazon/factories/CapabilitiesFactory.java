@@ -7,14 +7,12 @@ import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeOptions;
-import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.logging.LogType;
 import org.openqa.selenium.logging.LoggingPreferences;
 import org.openqa.selenium.opera.OperaOptions;
 import org.openqa.selenium.remote.CapabilityType;
-import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.util.Hashtable;
 import java.util.Map;
@@ -23,9 +21,16 @@ import java.util.logging.Level;
 import static java.lang.Boolean.parseBoolean;
 
 public class CapabilitiesFactory {
-    private static Config config = EnvFactory.getInstance().getConfig();
 
-    private static final boolean HEADLESS = parseBoolean(config.getString("HEADLESS"));
+    private static Config config = EnvFactory.getInstance().getConfig();
+    private static boolean headless(){
+        boolean HEADLESS = parseBoolean(config.getString("HEADLESS"));
+        if (System.getProperty("headless") != null) {
+            HEADLESS = parseBoolean(System.getProperty("headless"));
+        }
+        return HEADLESS;
+    }
+
     private static final boolean ACCEPT_INSECURE_CERTIFICATES = parseBoolean(config.getString("ACCEPT_INSECURE_CERTIFICATES"));
     private static final String SELENIUM_LOG_LEVEL = config.getString("SELENIUM_LOG_LEVEL");
     private static final String DOWNLOADS_DIR = config.getString("DOWNLOADS_DIR");
@@ -48,7 +53,7 @@ public class CapabilitiesFactory {
     public static ChromeOptions getChromeOptions() {
         ChromeOptions chromeOptions = new ChromeOptions();
         chromeOptions.setAcceptInsecureCerts(ACCEPT_INSECURE_CERTIFICATES);
-        chromeOptions.setHeadless(HEADLESS);
+        chromeOptions.setHeadless(headless());
         chromeOptions.addArguments("--disable-dev-shm-usage"); // overcome limited resource problems and a must-have step to run tests in docker pipeline or docker selenium grid
         chromeOptions.addArguments("--no-sandbox"); // overcome limited resource problems and a should-have step to run tests in docker pipeline or docker selenium grid
         chromeOptions.addArguments("--window-size=1920,1080");
@@ -75,11 +80,11 @@ public class CapabilitiesFactory {
         profile.setPreference("network.proxy.no_proxies_on", "localhost");
         profile.setPreference("javascript.enabled", true);
         profile.setPreference("browser.link.open_newwindow", 3);
-        profile.setPreference("browser.link.open_newwindow.restriction", 0);
+        profile.setPreference("javascript.enabled", true);
 
         FirefoxOptions firefoxOptions = new FirefoxOptions();
         firefoxOptions.setAcceptInsecureCerts(ACCEPT_INSECURE_CERTIFICATES);
-        firefoxOptions.setHeadless(HEADLESS);
+        firefoxOptions.setHeadless(headless());
         firefoxOptions.setProfile(profile);
         return firefoxOptions;
     }
