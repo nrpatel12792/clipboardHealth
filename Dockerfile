@@ -83,5 +83,3 @@ RUN git clone https://github.com/Gerardtit/clipboardHealth.git
 
 RUN cd clipboardHealth \
 	&& mvn clean install
-
-WORKDIR root/clipboardHealth
